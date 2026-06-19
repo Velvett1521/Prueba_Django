@@ -1,52 +1,11 @@
-# ===========================
-# ENTORNO VIRTUAL
-# ===========================
-venv/
-.venv/
-env/
-.env/
-ENV/
-
-# ===========================
-# PYTHON
-# ===========================
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
 *.pyd
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-
-# ===========================
-# DJANGO
-# ===========================
-*.log
-db.sqlite3
-db.sqlite3-journal
-staticfiles/       # se genera con collectstatic en el build
-media/             # archivos subidos por usuarios (cuando los haya)
-
-# ===========================
-# VARIABLES DE ENTORNO
-# ===========================
 .env
-.env.local
-.env.*.local
-
-# ===========================
-# SISTEMAS OPERATIVOS
-# ===========================
-.DS_Store          # Mac
-Thumbs.db          # Windows
-desktop.ini
-
-# ===========================
-# EDITORES
-# ===========================
-.vscode/
-.idea/
-*.swp
-*.swo
+.venv
+venv/
+staticfiles/
+db.sqlite3
+*.log
+.DS_Store

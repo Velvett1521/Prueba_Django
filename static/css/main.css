@@ -309,3 +309,44 @@ input, textarea, button { font-family: inherit; }
   .main-content { padding: 2.5rem 1rem 2rem; }
   .form-card { padding: 1.25rem; }
 }
+
+/* === FORM — WIDGETS DE DJANGO === */
+.field input[type="text"],
+.field input[type="email"],
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.field-error {
+  font-size: 0.78rem;
+  color: #ff6b6b;
+}
+
+/* === SUCCESS PAGE === */
+.success-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--accent-glow);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 0 auto;
+}

@@ -10,37 +10,46 @@
 
 <section class="form-section">
   <div class="form-card">
-    <!-- Nota: el action apunta a '#' por ser estático por ahora -->
-    <form action="#" method="POST">
+    <form method="POST">
       {% csrf_token %}
 
       <div class="field">
-        <label for="nombre">Tu nombre</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ej. Carlos M." required />
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+          <span class="field-error">{{ form.nombre.errors.0 }}</span>
+        {% endif %}
       </div>
 
       <div class="field">
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" placeholder="tu@correo.com" required />
+        {{ form.correo.label_tag }}
+        {{ form.correo }}
+        {% if form.correo.errors %}
+          <span class="field-error">{{ form.correo.errors.0 }}</span>
+        {% endif %}
       </div>
 
       <div class="field">
         <label>Calificación</label>
         <div class="stars-input">
-          {% for i in "54321" %}
-          <input type="radio" id="star{{ i }}" name="calificacion" value="{{ i }}" {% if i == "5" %}checked{% endif %} />
-          <label for="star{{ i }}" title="{{ i }} estrellas">★</label>
+          {% for value, label in form.calificacion.field.choices %}
+          <input type="radio" id="star{{ value }}" name="calificacion" value="{{ value }}"
+            {% if form.calificacion.value == value|stringformat:"s" %}checked{% endif %}
+            {% if not form.is_bound and value == 5 %}checked{% endif %} />
+          <label for="star{{ value }}" title="{{ label }}">★</label>
           {% endfor %}
         </div>
+        {% if form.calificacion.errors %}
+          <span class="field-error">{{ form.calificacion.errors.0 }}</span>
+        {% endif %}
       </div>
 
       <div class="field">
-        <label for="texto">Tu opinión</label>
-        <textarea id="texto" name="texto" rows="5" placeholder="Cuéntanos tu experiencia..." required></textarea>
-      </div>
-
-      <div class="form-note">
-        ⚠️ Modo estático — el formulario aún no guarda datos. Pronto conectaremos la base de datos.
+        {{ form.texto.label_tag }}
+        {{ form.texto }}
+        {% if form.texto.errors %}
+          <span class="field-error">{{ form.texto.errors.0 }}</span>
+        {% endif %}
       </div>
 
       <button type="submit" class="btn btn-primary btn-full">Enviar opinión</button>

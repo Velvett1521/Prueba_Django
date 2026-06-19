@@ -5,7 +5,7 @@
 <section class="page-header">
   <div class="hero-badge">✦ Comunidad</div>
   <h1 class="page-title">Lo que dicen <span class="accent">otros</span></h1>
-  <p class="page-sub">{{ opiniones|length }} opinión{{ opiniones|length|pluralize:"es" }} compartida{{ opiniones|length|pluralize:"s" }} hasta ahora.</p>
+  <p class="page-sub">{{ opiniones.count }} opinión{{ opiniones.count|pluralize:"es" }} compartida{{ opiniones.count|pluralize:"s" }} hasta ahora.</p>
 </section>
 
 <section class="opiniones-grid">
@@ -15,7 +15,7 @@
       <div class="op-avatar">{{ op.nombre|first }}</div>
       <div class="op-meta">
         <span class="op-nombre">{{ op.nombre }}</span>
-        <span class="op-fecha">{{ op.fecha }}</span>
+        <span class="op-fecha">{{ op.fecha|date:"d M Y" }}</span>
       </div>
     </header>
     <div class="op-stars">

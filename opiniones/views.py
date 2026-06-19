@@ -1,40 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Opinion
+from .forms import OpinionForm
 
 
 def inicio(request):
-    return render(request, 'inicio.html')
+    total = Opinion.objects.filter(activa=True).count()
+    return render(request, 'inicio.html', {'total': total})
 
 
 def dejar_opinion(request):
-    return render(request, 'dejar_opinion.html')
+    if request.method == 'POST':
+        form = OpinionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('opinion_enviada')
+    else:
+        form = OpinionForm()
+    return render(request, 'dejar_opinion.html', {'form': form})
+
+
+def opinion_enviada(request):
+    return render(request, 'opinion_enviada.html')
 
 
 def ver_opiniones(request):
-    # Opiniones estáticas de ejemplo (después vendrá la BD)
-    opiniones_ejemplo = [
-        {
-            'nombre': 'Carlos M.',
-            'texto': 'Excelente servicio, muy recomendado. La atención fue de primera y el proceso fue super sencillo.',
-            'calificacion': 5,
-            'fecha': '12 Jun 2025',
-        },
-        {
-            'nombre': 'Sofía R.',
-            'texto': 'Buena experiencia en general. El sitio es fácil de usar y el equipo responde rápido.',
-            'calificacion': 4,
-            'fecha': '8 Jun 2025',
-        },
-        {
-            'nombre': 'Miguel A.',
-            'texto': 'Todo perfecto desde el primer momento. Definitivamente volvería a usarlo sin dudarlo.',
-            'calificacion': 5,
-            'fecha': '1 Jun 2025',
-        },
-        {
-            'nombre': 'Laura T.',
-            'texto': 'Muy buen servicio aunque tardó un poco más de lo esperado. Al final todo salió bien.',
-            'calificacion': 4,
-            'fecha': '25 May 2025',
-        },
-    ]
-    return render(request, 'ver_opiniones.html', {'opiniones': opiniones_ejemplo})
+    opiniones = Opinion.objects.filter(activa=True)
+    return render(request, 'ver_opiniones.html', {'opiniones': opiniones})
