@@ -32,13 +32,17 @@
       <div class="field">
         <label>Calificación</label>
         <div class="stars-input">
-          {% for value, label in form.calificacion.field.choices %}
-          <input type="radio" id="star{{ value }}" name="calificacion" value="{{ value }}"
-            {% if form.calificacion.value == value|stringformat:"s" %}checked{% endif %}
-            {% if not form.is_bound and value == 5 %}checked{% endif %} />
-          <label for="star{{ value }}" title="{{ label }}">★</label>
-          {% endfor %}
-        </div>
+  <input type="radio" id="star5" name="calificacion" value="5" {% if not form.is_bound %}checked{% endif %} />
+  <label for="star5" title="5 estrellas">★</label>
+  <input type="radio" id="star4" name="calificacion" value="4" />
+  <label for="star4" title="4 estrellas">★</label>
+  <input type="radio" id="star3" name="calificacion" value="3" />
+  <label for="star3" title="3 estrellas">★</label>
+  <input type="radio" id="star2" name="calificacion" value="2" />
+  <label for="star2" title="2 estrellas">★</label>
+  <input type="radio" id="star1" name="calificacion" value="1" />
+  <label for="star1" title="1 estrella">★</label>
+</div>
         {% if form.calificacion.errors %}
           <span class="field-error">{{ form.calificacion.errors.0 }}</span>
         {% endif %}
