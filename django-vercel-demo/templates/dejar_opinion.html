@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Dejar opinión{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div class="hero-badge">✦ Tu voz importa</div>
+  <h1 class="page-title">Deja tu <span class="accent">opinión</span></h1>
+  <p class="page-sub">Cuéntanos cómo fue tu experiencia. Solo tarda un momento.</p>
+</section>
+
+<section class="form-section">
+  <div class="form-card">
+    <!-- Nota: el action apunta a '#' por ser estático por ahora -->
+    <form action="#" method="POST">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej. Carlos M." required />
+      </div>
+
+      <div class="field">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" placeholder="tu@correo.com" required />
+      </div>
+
+      <div class="field">
+        <label>Calificación</label>
+        <div class="stars-input">
+          {% for i in "54321" %}
+          <input type="radio" id="star{{ i }}" name="calificacion" value="{{ i }}" {% if i == "5" %}checked{% endif %} />
+          <label for="star{{ i }}" title="{{ i }} estrellas">★</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="texto">Tu opinión</label>
+        <textarea id="texto" name="texto" rows="5" placeholder="Cuéntanos tu experiencia..." required></textarea>
+      </div>
+
+      <div class="form-note">
+        ⚠️ Modo estático — el formulario aún no guarda datos. Pronto conectaremos la base de datos.
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">Enviar opinión</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

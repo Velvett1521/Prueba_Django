@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-badge">✦ Bienvenido</div>
+  <h1 class="hero-title">Lo que dicen<br/><span class="accent">nuestros usuarios</span></h1>
+  <p class="hero-sub">Un espacio honesto para compartir tu experiencia. Sin filtros, sin algoritmos — solo opiniones reales de personas reales.</p>
+  <div class="hero-actions">
+    <a href="{% url 'dejar_opinion' %}" class="btn btn-primary">Dejar mi opinión</a>
+    <a href="{% url 'ver_opiniones' %}" class="btn btn-ghost">Ver opiniones →</a>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature-card">
+    <span class="feature-icon">📝</span>
+    <h3>Comparte tu experiencia</h3>
+    <p>Cuéntanos cómo fue. Tu opinión ayuda a otros a tomar mejores decisiones.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">⭐</span>
+    <h3>Calificaciones reales</h3>
+    <p>Sin bots ni reseñas falsas. Cada calificación viene de una persona como tú.</p>
+  </div>
+  <div class="feature-card">
+    <span class="feature-icon">🔍</span>
+    <h3>Transparencia total</h3>
+    <p>Todas las opiniones son públicas. Nada se oculta, nada se edita.</p>
+  </div>
+</section>
+{% endblock %}

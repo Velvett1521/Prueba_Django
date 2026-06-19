@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Opiniones{% endblock %} — MiSitio</title>
+  {% load static %}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar">
+    <a href="{% url 'inicio' %}" class="brand">MiSitio</a>
+    <nav class="nav-links">
+      <a href="{% url 'inicio' %}" class="{% if request.resolver_match.url_name == 'inicio' %}active{% endif %}">Inicio</a>
+      <a href="{% url 'dejar_opinion' %}" class="{% if request.resolver_match.url_name == 'dejar_opinion' %}active{% endif %}">Opinar</a>
+      <a href="{% url 'ver_opiniones' %}" class="{% if request.resolver_match.url_name == 'ver_opiniones' %}active{% endif %}">Ver opiniones</a>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Hecho con Django &amp; desplegado en Vercel · 2025</p>
+  </footer>
+
+</body>
+</html>
