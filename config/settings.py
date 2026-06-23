@@ -1,9 +1,16 @@
 from pathlib import Path
 import os
 import dj_database_url
-from dotenv import load_dotenv  # ← nueva
+import cloudinary
+from dotenv import load_dotenv
 
-load_dotenv()  # ← nueva, carga el .env automáticamente
+load_dotenv()
+
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'opiniones',
 ]
 
@@ -57,9 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Base de datos
-# - Local: usa DATABASE_URL del .env  (ej. postgres://user:pass@localhost/dbname)
-# - Vercel: usa DATABASE_URL inyectada automáticamente por Vercel Postgres
 DATABASES = {
     'default': dj_database_url.config(
         env='DATABASE_URL',
@@ -72,9 +78,29 @@ TIME_ZONE = 'America/Mexico_City'
 USE_I18N = True
 USE_TZ = True
 
+# === STATIC ===
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# === CLOUDINARY MEDIA ===
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+
+MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

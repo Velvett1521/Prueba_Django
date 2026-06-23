@@ -8,8 +8,13 @@ class Opinion(models.Model):
     calificacion = models.PositiveSmallIntegerField(
         choices=[(i, f'{i} estrella{"s" if i > 1 else ""}') for i in range(1, 6)]
     )
+    imagen = models.ImageField(
+        upload_to='opiniones/',
+        blank=True,
+        null=True
+    )
     fecha = models.DateTimeField(auto_now_add=True)
-    activa = models.BooleanField(default=True)  # para moderar desde el admin
+    activa = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-fecha']

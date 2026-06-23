@@ -5,7 +5,7 @@ from .models import Opinion
 class OpinionForm(forms.ModelForm):
     class Meta:
         model = Opinion
-        fields = ['nombre', 'correo', 'calificacion', 'texto']
+        fields = ['nombre', 'correo', 'calificacion', 'texto', 'imagen']
         widgets = {
             'nombre': forms.TextInput(attrs={
                 'placeholder': 'Ej. Carlos M.',
@@ -17,10 +17,14 @@ class OpinionForm(forms.ModelForm):
                 'rows': 5,
                 'placeholder': 'Cuéntanos tu experiencia...',
             }),
+            'imagen': forms.ClearableFileInput(attrs={
+                'accept': 'image/*',
+            }),
         }
         labels = {
             'nombre': 'Tu nombre',
             'correo': 'Correo electrónico',
             'calificacion': 'Calificación',
             'texto': 'Tu opinión',
+            'imagen': 'Imagen (opcional)',
         }

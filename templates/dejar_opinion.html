@@ -10,54 +10,111 @@
 
 <section class="form-section">
   <div class="form-card">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="field">
         {{ form.nombre.label_tag }}
         {{ form.nombre }}
-        {% if form.nombre.errors %}
-          <span class="field-error">{{ form.nombre.errors.0 }}</span>
-        {% endif %}
+        {% if form.nombre.errors %}<span class="field-error">{{ form.nombre.errors.0 }}</span>{% endif %}
       </div>
 
       <div class="field">
         {{ form.correo.label_tag }}
         {{ form.correo }}
-        {% if form.correo.errors %}
-          <span class="field-error">{{ form.correo.errors.0 }}</span>
-        {% endif %}
+        {% if form.correo.errors %}<span class="field-error">{{ form.correo.errors.0 }}</span>{% endif %}
       </div>
 
       <div class="field">
         <label>Calificación</label>
         <div class="stars-input">
-  <input type="radio" id="star5" name="calificacion" value="5" {% if not form.is_bound %}checked{% endif %} />
-  <label for="star5" title="5 estrellas">★</label>
-  <input type="radio" id="star4" name="calificacion" value="4" />
-  <label for="star4" title="4 estrellas">★</label>
-  <input type="radio" id="star3" name="calificacion" value="3" />
-  <label for="star3" title="3 estrellas">★</label>
-  <input type="radio" id="star2" name="calificacion" value="2" />
-  <label for="star2" title="2 estrellas">★</label>
-  <input type="radio" id="star1" name="calificacion" value="1" />
-  <label for="star1" title="1 estrella">★</label>
-</div>
-        {% if form.calificacion.errors %}
-          <span class="field-error">{{ form.calificacion.errors.0 }}</span>
-        {% endif %}
+          <input type="radio" id="star5" name="calificacion" value="5" {% if not form.is_bound %}checked{% endif %} />
+          <label for="star5" title="5 estrellas">★</label>
+          <input type="radio" id="star4" name="calificacion" value="4" />
+          <label for="star4" title="4 estrellas">★</label>
+          <input type="radio" id="star3" name="calificacion" value="3" />
+          <label for="star3" title="3 estrellas">★</label>
+          <input type="radio" id="star2" name="calificacion" value="2" />
+          <label for="star2" title="2 estrellas">★</label>
+          <input type="radio" id="star1" name="calificacion" value="1" />
+          <label for="star1" title="1 estrella">★</label>
+        </div>
+        {% if form.calificacion.errors %}<span class="field-error">{{ form.calificacion.errors.0 }}</span>{% endif %}
       </div>
 
       <div class="field">
         {{ form.texto.label_tag }}
         {{ form.texto }}
-        {% if form.texto.errors %}
-          <span class="field-error">{{ form.texto.errors.0 }}</span>
-        {% endif %}
+        {% if form.texto.errors %}<span class="field-error">{{ form.texto.errors.0 }}</span>{% endif %}
+      </div>
+
+      <div class="field">
+        <label for="id_imagen">Imagen <span class="label-optional">(opcional)</span></label>
+        <div class="file-drop" id="fileDrop">
+          <input type="file" id="id_imagen" name="imagen" accept="image/*" />
+          <div class="file-drop-ui" id="fileDropUI">
+            <span class="file-drop-icon">🖼️</span>
+            <p>Arrastra una imagen o <span class="accent">selecciona un archivo</span></p>
+            <small>JPG, PNG, WEBP — máx. 5MB</small>
+          </div>
+          <div class="file-preview" id="filePreview" style="display:none;">
+            <img id="previewImg" src="" alt="preview" />
+            <button type="button" class="file-remove" id="fileRemove">✕ Quitar imagen</button>
+          </div>
+        </div>
+        {% if form.imagen.errors %}<span class="field-error">{{ form.imagen.errors.0 }}</span>{% endif %}
       </div>
 
       <button type="submit" class="btn btn-primary btn-full">Enviar opinión</button>
     </form>
   </div>
 </section>
+
+<script>
+const input = document.getElementById('id_imagen');
+const dropZone = document.getElementById('fileDrop');
+const dropUI = document.getElementById('fileDropUI');
+const preview = document.getElementById('filePreview');
+const previewImg = document.getElementById('previewImg');
+const removeBtn = document.getElementById('fileRemove');
+
+function showPreview(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    previewImg.src = e.target.result;
+    dropUI.style.display = 'none';
+    preview.style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+}
+
+input.addEventListener('change', () => showPreview(input.files[0]));
+
+dropUI.addEventListener('click', () => input.click());
+
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropZone.classList.add('drag-over');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+    showPreview(file);
+  }
+});
+
+removeBtn.addEventListener('click', () => {
+  input.value = '';
+  previewImg.src = '';
+  preview.style.display = 'none';
+  dropUI.style.display = 'flex';
+});
+</script>
 {% endblock %}

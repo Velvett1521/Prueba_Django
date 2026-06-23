@@ -10,7 +10,7 @@ def inicio(request):
 
 def dejar_opinion(request):
     if request.method == 'POST':
-        form = OpinionForm(request.POST)
+        form = OpinionForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('opinion_enviada')

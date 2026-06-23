@@ -11,6 +11,11 @@
 <section class="opiniones-grid">
   {% for op in opiniones %}
   <article class="opinion-card">
+    {% if op.imagen %}
+    <div class="op-imagen">
+      <img src="{{ op.imagen.url }}" alt="Imagen de {{ op.nombre }}" />
+    </div>
+    {% endif %}
     <header class="op-header">
       <div class="op-avatar">{{ op.nombre|first }}</div>
       <div class="op-meta">
